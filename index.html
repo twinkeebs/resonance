@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Resonance</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#05060f;--ink:#f6ead2;--ink2:#a49cc4;--panel:rgba(13,11,28,.88);--hot:#ffb35e;--shadow:#000}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#05060f;--ink:#f6ead2}}
+:root[data-theme="dark"]{--bg:#05060f;--ink:#f6ead2}
+html,body{margin:0;height:100%;overflow:hidden;background:var(--bg);color:var(--ink);font-family:'Silkscreen',monospace;-webkit-tap-highlight-color:transparent}
+#c{position:fixed;display:block;image-rendering:pixelated;image-rendering:crisp-edges}
+.ui{transition:opacity .6s}
+body.idle .ui{opacity:0;pointer-events:none}
+body.idle{cursor:none}
+#panel{position:fixed;left:16px;bottom:16px;max-width:calc(100vw - 60px);background:var(--panel);border:2px solid var(--ink);box-shadow:4px 4px 0 var(--shadow);padding:10px 12px}
+#panel h1{margin:0 0 8px;font-size:14px;font-weight:400;letter-spacing:3px;color:var(--hot)}
+.row{display:flex;flex-wrap:wrap;gap:6px}
+button{font:inherit;font-size:12px;color:var(--ink);background:transparent;border:2px solid var(--ink2);padding:5px 9px;min-height:32px;cursor:pointer;box-shadow:2px 2px 0 var(--shadow)}
+button:hover,button:focus-visible{border-color:var(--ink);outline:none}
+button.on{background:var(--ink);color:#0d0b1c;border-color:var(--ink)}
+button:active{transform:translate(2px,2px);box-shadow:none}
+#msg{margin-top:8px;min-height:12px;font-size:10px;color:var(--ink2)}
+#eq{position:fixed;right:16px;top:16px;width:120px;height:42px;image-rendering:pixelated;border:2px solid var(--ink);box-shadow:4px 4px 0 var(--shadow)}
+#eq[hidden]{display:none}
+#start{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;cursor:pointer;text-align:center;padding:16px}
+#start[hidden]{display:none}
+#start button{font-size:22px;padding:14px 28px;border-color:var(--ink);background:var(--panel);box-shadow:4px 4px 0 var(--shadow)}
+#start p{margin:0;font-size:11px;letter-spacing:1px;text-shadow:2px 2px 0 #000}
+body.drag::after{content:'DROP AUDIO';position:fixed;inset:12px;display:flex;align-items:center;justify-content:center;border:3px dashed var(--ink);background:rgba(0,0,0,.45);font-size:22px}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<canvas id="eq" class="ui-keep" width="40" height="14" title="spectrum and beat"></canvas>
+<div id="panel" class="ui">
+  <h1>RESONANCE</h1>
+  <div class="row">
+    <button id="bPlay">PLAY</button>
+    <button data-src="demo">DEMO</button>
+    <button data-src="file">FILE</button>
+    <button data-src="tab" title="Play a song in another tab (YouTube, Spotify), then share that tab with audio">TAB</button>
+    <button data-src="mic">MIC</button>
+    <button id="bEq" class="on">EQ</button>
+  </div>
+  <div id="msg">drop a file · TAB = youtube/spotify</div>
+</div>
+<div id="start">
+  <button id="bStart">PLAY</button>
+  <p>a sound-reactive pixel world</p>
+</div>
+<input type="file" id="file" accept="audio/*" hidden>
+<script src="audio.js"></script>
+<script src="world.js"></script>
+</body>
+</html>
